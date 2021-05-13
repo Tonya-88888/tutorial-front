@@ -1,28 +1,57 @@
 <template>
   <div class="tutorials">
-    <Sidebar> </Sidebar>
-    <div class="content">
-      <div class="contentText" v-for="user in users" :key="user.id" > {{ user.name }}</div>
+    <div>
+      <Sidebar
+        :tutorials="getTutorial"
+        @changeTutorial="edit"
+        @createTutorial="modalUp"
+      >
+      </Sidebar>
     </div>
+    <div class="contentTutorial">
+      <VieTutorial v-if="vieContent" :sections="getSection"></VieTutorial>
+    </div>
+    <PopUp v-if="vieModal" @closePopUp="vieModal=false"></PopUp>
   </div>
 </template>
 
 <script>
 import Sidebar from "../components/layouts/SidebarTutorials.vue";
+import VieTutorial from "../components/layouts/VieTutorial.vue";
+import PopUp from "../components/layouts/PopUp.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Tutorials",
   components: {
     Sidebar,
+    VieTutorial,
+    PopUp,
+  },
+  computed: mapGetters(["getTutorial", "getSection"]),
+  methods: {
+    ...mapActions(["fetchTutorial", "fetchSection"]),
+    edit(data) {
+      console.log(data);
+      this.curentTutorial = data;
+      this.fetchSection(this.curentTutorial);
+      this.vieContent = true;
+    },
+    modalUp() {
+      this.vieContent = true;
+      console.log("Создать новый учебник");
+    },
+
+  },
+  async mounted() {
+    this.fetchTutorial();
+    this.fetchSection();
   },
   data() {
     return {
-      users: [],
+      vieContent: false,
+      vieModal: false,
+      curentTutorial: "",
     };
-  },
-  async mounted() {
-    const res = await fetch("http://localhost:3000/api/v1/users");
-    const users = await res.json();
-    this.users = users;
   },
 };
 </script>
@@ -31,19 +60,22 @@ export default {
 .tutorials {
   display: grid;
   grid-template-columns: 1fr 5fr;
-  background-color: #98fb98;
-  height: 87vh;
-  width: 100vw;
+  height: 79vh;
+  width: 90vw;
+  position: fixed;
 }
-.content {
-  background-color: rgb(255, 255, 255);
-  border-radius: 10px;
-  margin: 6px 6px 6px 0px;
-  align-content: center;
-  padding: 10px; /* Поля вокруг текста */
-}
-.contentText {
-  margin: 20px 20px 20px 20px;
-  color: gray;
+.contentTutorial {
+  background: rgb(248, 248, 248);
+  outline: 2px solid rgb(197, 197, 197);
+  width: 800px;
+  height: 450px;
+  margin: 0px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
 </style>

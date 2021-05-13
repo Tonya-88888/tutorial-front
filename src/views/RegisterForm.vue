@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    
     <div class="header">
       <h2>Регистрация</h2>
     </div>
@@ -51,6 +52,7 @@
 <script>
 import axios from "axios";
 import {addUser,getUser } from "../services/user.service";
+import { getAllSection } from "../services/section.service";
 export default {
   data() {
     return {
@@ -67,36 +69,30 @@ export default {
       this.checkInputs();
 
 
+// const tmp = getAllSection("609a5b1bb4f03920388c0172").then(
+//     result => {
+//   console.log(result); // result - аргумент resolve
+//     })
+   // console.log(tmp);
 
-//console.log(getUser("6078aa55c7a9ab27a0897af2"));
-const mydata = {
-      name: this.name1,
-            email: this.email,
-            surname: this.username,
-            password: this.password,
-      }
 const tmp = addUser({
       name: this.name,
             email: this.email,
             surname: this.surname,
             password: this.password,
-      }) .then()
-  .catch(error => console.log(error));
-   
-  
-   console.log(tmp);
+      }).then(
+    result => {
+      // первая функция-обработчик - запустится при вызове resolve
+      console.log(result); // result - аргумент resolve
+    })
 
-  // console.log(mydata);
+
+
+
       // console.log(
       //   await axios({
-      //     url: "http://localhost:3000/api/v1/users",
-      //     method: "post",
-      //     data: {
-      //       name: this.name1,
-      //       email: this.email,
-      //       surname: this.username,
-      //       password: this.password,
-      //     },
+      //     url: "http://localhost:3000/api/v1/sections/tutorial/609a5b1bb4f03920388c0172",
+      //     method: "get",
       //   })
       // );
     },

@@ -1,17 +1,27 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+  <div id="app">
+    <NavHeader ></NavHeader>
+    <router-view />
+    </div>
 </template>
+
+<script>
+  import NavHeader from './components/layouts/Header';
+export default {
+
+  components:{
+    'NavHeader': NavHeader,
+  }
+
+};
+</script>
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+
   color: #2c3e50;
 }
 

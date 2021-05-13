@@ -1,9 +1,9 @@
 <template>
   <div class="builder">
-    <SidebarBuilder />
+    <SidebarBuilder :sections="getSection" > </SidebarBuilder >
+    <div class="builderContent">
 
-    <div class="content">
-      <div class="curentSlide">
+      
         <QuillEditor
           ref="header"
           :content="contentValue"
@@ -13,7 +13,7 @@
         >
         </QuillEditor>
       </div>
-    </div>
+    
   </div>
 </template>
 
@@ -21,6 +21,7 @@
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import SidebarBuilder from "../components/layouts/SidebarBuilder.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "BuilderTutorial",
@@ -29,10 +30,16 @@ export default {
     SidebarBuilder,
   },
   data() {
-    return { contentValue: "да " };
+    return { contentValue: ""};
   },
-
-  methods: {
+  computed: mapGetters(["getSection"]),
+  async mounted() {
+    //window.setInterval( console.log, 3000, "3000"); таймер
+    this.fetchSection(`609a5b1bb4f03920388c0172`);
+    
+  },
+  methods:  {
+    ...mapActions(["fetchSection"]),
     getText: function () {
       // this.contentValue =  "<p>Ну привет! работает!!!!</p>" ;
 
@@ -42,11 +49,7 @@ export default {
       );
       console.log(tmp);
     },
-    mounted: function () // для автосохр-ия вызывает console.log по прошествию 3000мс, "3000" - параметр ф-ции
-     {window.setInterval( console.log, 3000, "3000");
-
-    },
-   
+  
   },
 };
 </script>
@@ -75,5 +78,9 @@ export default {
   bottom: 0;
   right: 0;
   margin: auto;
+}
+.builderContent{
+  padding-left: 10px;
+
 }
 </style>

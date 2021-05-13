@@ -1,6 +1,6 @@
 //action получает объект, commit вызывает mutation, mutation изменяет state,  getters возврвщает состояние компоненту
 import { createStore } from "vuex";
-import { addUser, getUser } from "../services/user.service";
+import { addUser, getUser } from "../../services/user.service";
 
 const mutations = {
   fetchUser(state, user) {

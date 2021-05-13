@@ -1,32 +1,17 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebarBuilder">
     <div class="title">Содержание:</div>
-    <div class="item">
-      <ul>
-        <li v-for="item in tutorials" :key=" item.id">
-          {{item.name}}
-        </li>
-      </ul>
-      <div class="link-container">добавить параграф</div>
-      <!--   <div class="link-container"><button class= "buttonNew">добавить параграф</button></div> -->
+    <div class="item" v-for="item in sections" :key="item.id">
+      <button class="buttonSection">{{ item.name }}</button>
     </div>
+    <div> <button class="buttonNew">добавить параграф</button></div>
   </div>
 </template>
 
 <script>
 export default {
   name: "SidebarBuilder",
-  data: () => ({
-    tutorials: [
-      {
-        _id: 1,
-        name: "Введение",
-      },
-      { _id: 2, name: "Глава 1" },
-         { _id: 3, name: "Глава 2" },
-         { _id: 4, name: "Глава 3" },
-    ],
-  }),
+  props: ["sections"],
 };
 </script>
 
@@ -51,17 +36,21 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.buttonNew {
-  height: 30px;
-  width: 30px;
-  color: black;
-  padding: 2px;
-  text-align: center;
-  font-size: 16px;
-  margin-left: 70px;
-  border-radius: 20зч;
+.buttonSection {
+  background-color: #cfd4cf;
+  margin-top: 3px;
+  border: none;
+  padding: 10px 0px;
 }
 
+.buttonNew {
+  background-color: #eeeeee;
+  margin-top: 3px;
+  border: none;
+  padding: 10px 5px;
+  border-radius: 10px;
+  margin: 20px;
+}
 .green {
   background-color: rgb(236, 235, 235);
 }

@@ -2,9 +2,20 @@
   <div class="sidebarBuilder">
     <div class="title">Содержание:</div>
     <div class="item" v-for="item in sections" :key="item.id">
-      <button class="buttonSection">{{ item.name }}</button>
+      <button
+        class="buttonSection"
+        @click="chooseSection(item._id)"
+        @click.right="rightButtonClick($event, item._id)"
+      >
+        {{ item.name }}
+      </button>
+           <button>тест</button>
     </div>
-    <div> <button class="buttonNew">добавить параграф</button></div>
+    <div>
+      <button class="buttonNew" @click="newSectionClick">
+        добавить параграф
+      </button>
+    </div>
   </div>
 </template>
 
@@ -12,10 +23,25 @@
 export default {
   name: "SidebarBuilder",
   props: ["sections"],
+  methods: {
+    newSectionClick() {
+      this.$emit("newSectionClick");
+    },
+    chooseSection(sectionId) {
+      this.$emit("chooseSection", sectionId);
+    },
+    rightButtonClick(e, sectionId) {
+      this.$emit("rightButtonClick", e, sectionId);
+    },
+  },
 };
 </script>
 
 <style lang="css">
+.sidebarBuilder{
+   overflow-y: auto;
+}
+
 .builder {
   border-radius: 10px;
   background-color: #ffff;

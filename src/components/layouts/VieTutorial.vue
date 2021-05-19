@@ -10,22 +10,28 @@
         
       </div>
     </div>
-    <div class="contentVieTutorial" v-html="content"></div>
+  <div class= "contentVieTutorial" v-html="contentTuto"></div> 
   </div>
 </template>
 
 <script>
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+
 export default {
   name: "VieTutorial",
   props: ["sections"],
+    components: {
+    QuillEditor,
+  },
   data() {
     return {
-      content: "",
+      contentTuto: "",
     };
   },
   methods: {
-    editSection(content) {
-      this.content = content;
+    editSection(contentTuto) {
+      this.contentTuto = contentTuto;
     },
   },
 };
@@ -34,8 +40,23 @@ export default {
 <style lang="css">
 .vieTutorial {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr 5fr;
   position: fixed;
+}
+.contentVieTutorial{
+
+    box-sizing: border-box;
+    line-height: 1.42;
+    height: 100%;
+    outline: none;
+    overflow-y: auto;
+    padding: 12px 15px;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 .vieSidebar {
   border-radius: 10px;

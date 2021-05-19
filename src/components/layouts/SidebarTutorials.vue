@@ -1,21 +1,22 @@
 <template>
   <div class="sidebar">
-    <router-link to="/builder">
-      <div>
-        <button class="builderButton" @click="createTutorial">
-          Создать новый
-        </button>
-      </div>
-    </router-link>
+    <div>
+      <button class="builderButton" @click="createTutorial">
+        Создать новый
+      </button>
+    </div>
     <div class="title1">Учебники:</div>
     <div class="item1" v-for="tutorial in tutorials" :key="tutorial._id">
-      <router-link to="/tutorials" active-class="active">
-        <div class="link-container1">
-          <button class="buttonSide" @click="changeTutorial(tutorial._id)">
-            {{ tutorial.name }}
-          </button>
-        </div>
-      </router-link>
+      <div class="link-container1">
+        <button
+          class="buttonSide"
+          @click="changeTutorial(tutorial._id)"
+          @click.right="rightButtonClick($event, tutorial._id)"
+        >
+          {{ tutorial.name }}
+        </button>
+   
+      </div>
     </div>
   </div>
 </template>
@@ -30,11 +31,17 @@ export default {
     createTutorial() {
       this.$emit("createTutorial");
     },
+    rightButtonClick(e, sectionId) {
+      this.$emit("rightButtonClick", e, sectionId);
+    },
   },
 };
 </script>
 
 <style lang="css">
+.sidebar {
+  overflow: auto;
+}
 .builderButton {
   border-radius: 10px;
   background-color: #ffff;
@@ -60,6 +67,10 @@ export default {
   margin-top: 3px;
   border: none;
   padding: 10px 0px;
+  transition: 0.2s ease;
+}
+.buttonSide:hover{
+background-color:whitesmoke;
 }
 .green1 {
   background-color: #ffff;

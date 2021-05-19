@@ -1,16 +1,20 @@
 <template>
   <div class="popup">
     <div class="popup-inner">
-      <p>Введите название нового учебника</p>
+      <slot></slot>
+
       <input
         class="popUpInput"
         type="text"
         v-model.trim="popUpInput"
         id="popUpInput"
+        @keyup.enter="clickOK"
       />
       <div class="button-pop">
-        <button class="popup-close">готово</button>
-        <button class="popup-close" @click="closePopUp">отмена</button>
+        <button class="popup-btn" :disabled="OkDisabled" @click="clickOK">
+          готово
+        </button>
+        <button class="popup-btn" @click="closePopUp">отмена</button>
       </div>
     </div>
   </div>
@@ -19,10 +23,24 @@
 <script>
 export default {
   name: "PopUp",
-  props: ["popUpText", "popUpInput"],
+  props: [],
+  data() {
+    return {
+      popUpInput: "",
+    };
+  },
   methods: {
     closePopUp() {
       this.$emit("closePopUp");
+    },
+    clickOK() {
+      if (this.popUpInput.length !== 0)
+        this.$emit("PopUpClickOK", this.popUpInput);
+    },
+  },
+  computed: {
+    OkDisabled() {
+      return this.popUpInput.length === 0;
     },
   },
 };
@@ -43,10 +61,10 @@ export default {
   justify-content: center;
 }
 .popup-inner {
-  background: #fff;
+  background: rgb(255, 255, 255);
   padding: 32px;
 }
-.popup-close {
+.popup-btn {
   margin-left: 10px;
   margin-right: 10px;
   margin-top: 10px;
@@ -54,11 +72,15 @@ export default {
   height: 30px;
   width: 70px;
   border: none;
+  border-radius: 10px;
 }
 .button-pop {
   text-align: end;
 }
 .popUpInput {
   width: 100%;
+  border: 1px solid rgb(126, 126, 126);
+  border-radius: 10px;
+  padding: 3px;
 }
 </style>

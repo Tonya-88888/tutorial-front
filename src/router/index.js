@@ -35,10 +35,16 @@ const routes = [
   },
 
   {
-    path: "/builder",
+    path: "/builder:tutorialId",
     name: "BuilderTutorial",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/BuilderTutorial.vue"),
+  },
+{
+    path: "/builderQwiz",
+    name: "BuilderQwiz",
+    component: () =>
+    import(/* webpackChunkName: "about" */ "../views/BuilderQwiz.vue"),
   },
 ];
 

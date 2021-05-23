@@ -22,6 +22,8 @@
         <TrueFalse v-if="questionType ==1" :data="answers"></TrueFalse>
         <OneAnswer v-if="questionType ==2" ></OneAnswer>
         <ManyAnswer v-if="questionType ==3"></ManyAnswer>
+        <Sequence v-if="questionType ==5"></Sequence>
+
         <div class="grid-item feedback-header"><p>Обратная связь</p></div>
         <div class="grid-item feedback"></div>
       </div>
@@ -33,6 +35,7 @@ import Sidebar from "../components/layouts/SidebarTutorials.vue";
 import TrueFalse from "../components/QwizCreator/TrueFals.vue"
 import OneAnswer from "../components/QwizCreator/OneAnswer.vue"
 import ManyAnswer from "../components/QwizCreator/ManyAnswer.vue"
+import Sequence from "../components/QwizCreator/Sequence.vue"
 
 export default {
   name: "BuilderQwiz",
@@ -41,6 +44,7 @@ export default {
     TrueFalse,
     OneAnswer,
     ManyAnswer,
+    Sequence,
   },
   data() {
     return {
@@ -152,5 +156,8 @@ export default {
   background-color: #fff;
   width: 30px;
   border: 1px solid black;
+}
+button:hover{
+  background-color:rgb(197, 197, 197);
 }
 </style>

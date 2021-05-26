@@ -11,7 +11,7 @@
       <hr />
       <div
         class="answer-item"
-        v-for="(answer, index) in items.sort(sortAnswer)"
+        v-for="(answer, index) in items"
         :key="answer.id"
       >
         <div class="answer-radio">
@@ -32,7 +32,7 @@
           ></textarea>
         </div>
         <div>
-          <button class="delete-answer" @click="deleteAnswer(index)">X</button>
+          <button class="delete-answer" @click="deleteAnswer(answer.index)">X</button>
         </div>
       </div>
       <button class="add-sequence-button" @click="addElSequence">
@@ -60,11 +60,15 @@ export default {
   },
   methods: {
     addElSequence() {
-      this.items.push({ answerText: "", index: 0 , id:this.items.length });
+      this.items.push({ answerText: "000", index: this.items.length+1, id: this.items.length+1 });
     },
     deleteAnswer(index) {
       if (this.items.length !== 1) {
-        this.items.splice(index, 1);
+        this.items.splice(index-1, 1);
+        for (let i = 0; i < this.items.length; i++) {
+         // this.items.id = i + 1;
+          this.items.index = i + 1;
+        }
       }
     },
     onDragStart(e, item) {
@@ -74,17 +78,23 @@ export default {
     onDrop(e, item) {
       e.preventDefault();
       console.log("drop", item);
-      this.items = this.items.map((i) => {
-        if (i.id === item.id) {
+
+      let tmp = this.items.map((i) => {
+        if (i.index === item.index) {
+       // if (i.id === item.id) {
           return { ...i, index: this.currAnswer.index };
         }
 
-        if (i.id === this.currAnswer.id) {
+        if (i.index === this.currAnswer.index) {
+       // if (i.id === this.currAnswer.id) {
           return { ...i, index: item.index };
         }
 
         return i;
       });
+
+      this.items = tmp.sort(this.sortAnswer);
+
       e.target.style.background = "white";
     },
     onOver(e) {

@@ -14,6 +14,7 @@
             <option value="3">Выбор нескольких ответов</option>
             <option value="4">Краткий ответ</option>
             <option value="5">Последовательность</option>
+            <option value="6">Выбор области</option>
           </select></div>
           <button class="save-button"> Сохранить вопрос</button>
             </div>
@@ -23,6 +24,8 @@
         <OneAnswer v-if="questionType ==2" ></OneAnswer>
         <ManyAnswer v-if="questionType ==3"></ManyAnswer>
         <Sequence v-if="questionType ==5"></Sequence>
+        <DefineArea v-if="questionType ==6"></DefineArea>
+        
 
         <div class="grid-item feedback-header"><p>Обратная связь</p></div>
         <div class="grid-item feedback"></div>
@@ -36,6 +39,8 @@ import TrueFalse from "../components/QwizCreator/TrueFals.vue"
 import OneAnswer from "../components/QwizCreator/OneAnswer.vue"
 import ManyAnswer from "../components/QwizCreator/ManyAnswer.vue"
 import Sequence from "../components/QwizCreator/Sequence.vue"
+import DefineArea from "../components/QwizCreator/DefineArea.vue"
+
 
 export default {
   name: "BuilderQwiz",
@@ -45,6 +50,7 @@ export default {
     OneAnswer,
     ManyAnswer,
     Sequence,
+    DefineArea,
   },
   data() {
     return {

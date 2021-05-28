@@ -41,7 +41,7 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/BuilderTutorial.vue"),
   },
 {
-    path: "/builderQwiz",
+    path: "/builderQwiz/:sectionId",
     name: "BuilderQwiz",
     component: () =>
     import(/* webpackChunkName: "about" */ "../views/BuilderQwiz.vue"),

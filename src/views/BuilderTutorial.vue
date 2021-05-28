@@ -6,6 +6,7 @@
       @chooseSection="chooseSection"
       @rightButtonClick="ctxMenuProcessing"
       @newSectionClick="vieModal = true"
+      @newQwizClick="createQwiz"
     >
     </SidebarBuilder>
     <ContextMenu :display="showContextMenu" ref="menu">
@@ -110,9 +111,6 @@ export default {
       this.currSection = sectionId;
       let currContent = this.getCurrSection(sectionId).content; //установка контента
       this.$refs.header.setContents(currContent);
-
-      console.log("pre" + this.currSectionpre);
-      console.log("cur" + this.currSection);
     },
     async PopUpClickOK(SectionName) {
       if (this.currSection !== "") {
@@ -133,8 +131,13 @@ export default {
       this.vieModal = false;
       this.$refs.header.setContents(""); // текущий контент - пустая строка
     },
+    createQwiz(){
+     
+      this.$router.push({name: "BuilderQwiz", params: { sectionId: this.currSection }});
+
+    },
     ctxMenuProcessing(e, sectionId) {
-      console.log(sectionId);
+     
       this.$refs.menu.open(e);
       this.editElid = sectionId;
     },

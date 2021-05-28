@@ -15,6 +15,9 @@
       <button class="buttonNew" @click="newSectionClick">
         добавить параграф
       </button>
+            <button class="buttonNew" @click="newQwizClick">
+        добавить задание
+      </button>
     </div>
   </div>
 </template>
@@ -26,6 +29,9 @@ export default {
   methods: {
     newSectionClick() {
       this.$emit("newSectionClick");
+    },
+        newQwizClick() {
+      this.$emit("newQwizClick");
     },
     chooseSection(sectionId) {
       this.$emit("chooseSection", sectionId);

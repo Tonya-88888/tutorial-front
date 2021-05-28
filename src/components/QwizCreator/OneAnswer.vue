@@ -1,12 +1,16 @@
 <template>
   <div class="oneAnswer">
-    <div class="grid-item question-header"><p>Вопрос</p></div>
+    <div class="grid-item question-header">
+      <p>Вопрос</p>
+      <button class="save-button" @click="saveQwiz">Сохранить вопрос</button>
+    </div>
     <div class="grid-item">
       <textarea
         class="question-input"
         placeholder="Введите вопрос"
         rows="4"
         maxlength="350"
+        v-model="question"
       ></textarea>
     </div>
     <div class="grid-item answer-header"><p>Варианты ответов</p></div>
@@ -16,19 +20,24 @@
         <span>верный</span><span>вариант ответа</span>
       </div>
       <hr />
-      <div class="answer-item" v-for="(answer, index) in answers" :key="answer.id">
+      <div class="answer-item" v-for="(answer, index) in data" :key="answer.id">
         <div class="answer-radio">
-          <input type="radio" :value="answer.answer" :checked="answer.isTrue" v-model="oneAnswer" />
+          <input
+            type="radio"
+            :value="answer"
+            :checked="answer.isTrue"
+            v-model="answerItem"
+          />
         </div>
         <div class="answer-div">
           <input
             class="answer-input"
             placeholder="вариант ответа"
-            :value="answer.answer"
+            v-model="answer.text"
           />
         </div>
         <div>
-          <button class="delete-answer" @click="deleteAnswer(index)">-</button>
+          <button class="delete-answer" @click="deleteAnswer(index)">X</button>
         </div>
       </div>
       <button class="add-button" @click="addAnswer">Добавить ответ</button>
@@ -36,26 +45,65 @@
   </div>
 </template>
 <script>
+import { getQwizBySectionId, addQwiz } from "../../services/qwiz.service";
 export default {
   name: "OneAnswer",
-  props: ["data"],
   data() {
     return {
-      answers: [
-        { answer: "верно", isTrue: true },
-        { answer: "не верно", isTrue: false },
-      ],
-      oneAnswer: "",
+      question: "",
+      data: [{ text: "", isTrue: true }],
+      answerItem: {},
     };
   },
   methods: {
     addAnswer() {
-      this.answers.push({ answer: "", isTrue: false });
+      this.data.push({ text: "", isTrue: false });
     },
     deleteAnswer(indexs) {
-      console.log(this.answers.length);
-      if (this.answers.length !== 1) {
-        this.answers.splice(indexs, 1);
+      if (this.data.length !== 1) {
+        this.data.splice(indexs, 1);
+      }
+    },
+    async saveQwiz() {
+      let allTextFilled = true;
+      for (let i = 0; i < this.data.length; i++) {
+        // проверим все ответы на заполненность
+        if (this.data[i].text.length === 0) {
+          allTextFilled = false;
+          break;
+        }
+      }
+      if (
+        this.question.length === 0 ||
+        Object.keys(this.answerItem).length === 0 ||
+        !allTextFilled
+      ) {
+        alert("НЕ все поля заполнены");
+      } else {
+        let tmp = {
+          type: 2,
+          question: this.question,
+          answers: this.data,
+          id_Section: this.$route.params.sectionId,
+        };
+        console.log(tmp);
+        await addQwiz(tmp).then((result) => {
+          console.log(result);
+          alert("Вопрос сохранён");
+           this.data.length = 0;
+          this.question = "";
+        });
+      }
+    },
+  },
+  watch: {
+    answerItem(newAnswer, oldAnswer) {
+      for (let i = 0; i < this.data.length; i++) {
+        if (this.data[i] === newAnswer) {
+          this.data[i].isTrue = true;
+        } else {
+          this.data[i].isTrue = false;
+        }
       }
     },
   },

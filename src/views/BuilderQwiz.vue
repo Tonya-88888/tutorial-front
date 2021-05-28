@@ -1,7 +1,7 @@
 <template>
   <div class="builder-qwiz">
     <div class="qwiz-sidebar">
-      <Sidebar :tutorials="qwiz"> </Sidebar>
+      <SidebarQwiz :list="qwiz" @createQwiz="addClick"> </SidebarQwiz>
     </div>
     <div class="builder-content">
       <div class="grid">
@@ -16,11 +16,11 @@
             <option value="5">Последовательность</option>
             <option value="6">Выбор области</option>
           </select></div>
-          <button class="save-button"> Сохранить вопрос</button>
+        
             </div>
          
         </div>
-        <TrueFalse v-if="questionType ==1" :data="answers"></TrueFalse>
+        <TrueFalse v-if="questionType ==1"></TrueFalse>
         <OneAnswer v-if="questionType ==2" ></OneAnswer>
         <ManyAnswer v-if="questionType ==3"></ManyAnswer>
         <Sequence v-if="questionType ==5"></Sequence>
@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import Sidebar from "../components/layouts/SidebarTutorials.vue";
+import SidebarQwiz from "../components/layouts/SidebarQwiz.vue";
 import TrueFalse from "../components/QwizCreator/TrueFals.vue"
 import OneAnswer from "../components/QwizCreator/OneAnswer.vue"
 import ManyAnswer from "../components/QwizCreator/ManyAnswer.vue"
@@ -42,10 +42,11 @@ import Sequence from "../components/QwizCreator/Sequence.vue"
 import DefineArea from "../components/QwizCreator/DefineArea.vue"
 
 
+
 export default {
   name: "BuilderQwiz",
   components: {
-    Sidebar,
+    SidebarQwiz,
     TrueFalse,
     OneAnswer,
     ManyAnswer,
@@ -58,13 +59,26 @@ export default {
       questionType: "",
 
       qwiz: [
-        { name: "Вопрос 1", _id: 1 },
-        { name: "Вопрос 2", _id: 2 },
-        { name: "Вопрос 3", _id: 3 },
-        { name: "Вопрос 4", _id: 4 },
-        { name: "Вопрос 5", _id: 5 },
+        { name: "Задание 1", _id: 1 },
       ],
     };
+  },
+  methods:{
+    addClick(){
+      let id = this.qwiz.length + 1;
+      this.qwiz.push({name: `Задание ${id}`, _id: id})
+    },
+    saveQwiz(){
+      
+      let id = this.qwiz.length + 1;
+      this.qwiz.push({name: `Задание ${id}`, _id: id})
+    },
+    
+  },
+    computed: {
+    OkDisabled() {
+     // return this.popUpInput.length === 0;
+    },
   },
 };
 </script>
@@ -107,8 +121,10 @@ export default {
 }
 .save-button{
     padding: 5px;
-    margin-top: 35px;
-    margin-left: 35px;
+    margin-top: 5px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+    margin-right: 100px;
     background-color: #fff;
     border: 1px solid #000;
     border-radius: 10px;
@@ -165,5 +181,9 @@ export default {
 }
 button:hover{
   background-color:rgb(197, 197, 197);
+}
+.question-header{
+   display: flex;
+   justify-content: space-between;
 }
 </style>

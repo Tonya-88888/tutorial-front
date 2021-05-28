@@ -3,25 +3,36 @@
     <div class="vieSidebar">
       <div class="titleSection">Содержание:</div>
       <div class="itemSection" v-for="item in sections" :key="item._id">
-       
-          <button @click="editSection(item.content)">
-            {{ item.name }}
-          </button>
-        
+        <button @click="editSection(item.content)">
+          {{ item.name }}
+        </button>
       </div>
     </div>
-  <div class= "contentVieTutorial" v-html="contentTuto"></div> 
+<div class="contentVieTutorial">
+      <QuillEditor
+  
+        ref="view"
+        :content="contentTuto"
+        contentType="html"
+        theme="bubble"
+        readOnly="true"
+        enable="false"
+        scrollingContainer: true
+      ></QuillEditor>
+   </div>
   </div>
 </template>
 
 <script>
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 
 export default {
   name: "VieTutorial",
   props: ["sections"],
-    components: {
+
+  components: {
     QuillEditor,
   },
   data() {
@@ -32,6 +43,7 @@ export default {
   methods: {
     editSection(contentTuto) {
       this.contentTuto = contentTuto;
+      this.$refs.view.setContents(contentTuto);
     },
   },
 };
@@ -43,20 +55,11 @@ export default {
   grid-template-columns: 1fr 5fr;
   position: fixed;
 }
-.contentVieTutorial{
-
-    box-sizing: border-box;
-    line-height: 1.42;
-    height: 100%;
-    outline: none;
-    overflow-y: auto;
-    padding: 12px 15px;
-    -o-tab-size: 4;
-    tab-size: 4;
-    -moz-tab-size: 4;
-    text-align: left;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+.contentVieTutorial {
+  padding-left: 10px;
+  overflow-y: auto;
+  height: 78vh;
+  width: 92%;
 }
 .vieSidebar {
   border-radius: 10px;

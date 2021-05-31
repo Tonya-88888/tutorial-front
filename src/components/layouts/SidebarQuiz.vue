@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <div>
-    <!-- <button class="builderButton" @click="createQwiz">
+      <!-- <button class="builderButton" @click="createQuiz">
         Создать новое
       </button> -->
     </div>
@@ -10,12 +10,11 @@
       <div class="link-container1">
         <button
           class="buttonSide"
-          @click="changeQwiz(item._id)"
+          @click="changeQuiz(item._id)"
           @click.right="rightButtonClick($event, item._id)"
         >
           {{ item.name }}
         </button>
-   
       </div>
     </div>
   </div>
@@ -23,14 +22,14 @@
 
 <script>
 export default {
-  name: "SidebarQwiz",
+  name: "SidebarQuiz",
   props: ["list"],
   methods: {
-    changeQwiz(id) {
-      this.$emit("changeQwiz", id);
+    changeQuiz(id) {
+      this.$emit("changeQuiz", id);
     },
-    createQwiz() {
-      this.$emit("createQwiz");
+    createQuiz() {
+      this.$emit("createQuiz");
     },
     rightButtonClick(e, sectionId) {
       this.$emit("rightButtonClick", e, sectionId);
@@ -70,8 +69,8 @@ export default {
   padding: 10px 0px;
   transition: 0.2s ease;
 }
-.buttonSide:hover{
-background-color:whitesmoke;
+.buttonSide:hover {
+  background-color: whitesmoke;
 }
 .green1 {
   background-color: #ffff;

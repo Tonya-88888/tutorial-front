@@ -2,7 +2,7 @@
   <div class="oneAnswer">
     <div class="grid-item question-header">
       <p>Вопрос</p>
-      <button class="save-button" @click="saveQwiz">Сохранить вопрос</button>
+      <button class="save-button" @click="saveQuiz">Сохранить вопрос</button>
     </div>
     <div class="grid-item">
       <textarea
@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import { getQwizBySectionId, addQwiz } from "../../services/qwiz.service";
+import { getQuizBySectionId, addQuiz } from "../../services/quiz.service";
 export default {
   name: "OneAnswer",
   data() {
@@ -64,7 +64,7 @@ export default {
         this.data.splice(indexs, 1);
       }
     },
-    async saveQwiz() {
+    async saveQuiz() {
       let allTextFilled = true;
       for (let i = 0; i < this.data.length; i++) {
         // проверим все ответы на заполненность
@@ -87,10 +87,10 @@ export default {
           id_Section: this.$route.params.sectionId,
         };
         console.log(tmp);
-        await addQwiz(tmp).then((result) => {
+        await addQuiz(tmp).then((result) => {
           console.log(result);
           alert("Вопрос сохранён");
-           this.data.length = 0;
+          this.data.length = 0;
           this.question = "";
         });
       }

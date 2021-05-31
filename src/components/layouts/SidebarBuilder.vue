@@ -1,7 +1,7 @@
 <template>
   <div class="sidebarBuilder">
     <div class="title">Содержание:</div>
-    <div class="item" v-for="item in sections" :key="item.id">
+    <div class="item" v-for="item in sections" :key="item._id">
       <button
         class="buttonSection"
         @click="chooseSection(item._id)"
@@ -9,29 +9,40 @@
       >
         {{ item.name }}
       </button>
-           <button>тест</button>
+
+      <QuizButton :section="item"></QuizButton>
     </div>
     <div>
       <button class="buttonNew" @click="newSectionClick">
         добавить параграф
       </button>
-            <button class="buttonNew" @click="newQwizClick">
-        добавить задание
-      </button>
+      <button class="buttonNew" @click="newQuizClick">добавить задание</button>
     </div>
   </div>
 </template>
 
 <script>
+import { getQuizBySectionId, addQuiz } from "../../services/quiz.service";
+import QuizButton from "./QuizButton.vue";
 export default {
   name: "SidebarBuilder",
   props: ["sections"],
+  components: {
+    QuizButton,
+  },
+  data() {
+    return {
+      doHaveQuiz: "",
+      fetone: false,
+      id: "",
+    };
+  },
   methods: {
     newSectionClick() {
       this.$emit("newSectionClick");
     },
-        newQwizClick() {
-      this.$emit("newQwizClick");
+    newQuizClick() {
+      this.$emit("newQuizClick");
     },
     chooseSection(sectionId) {
       this.$emit("chooseSection", sectionId);
@@ -39,13 +50,32 @@ export default {
     rightButtonClick(e, sectionId) {
       this.$emit("rightButtonClick", e, sectionId);
     },
+    async getQuiz(id) {
+      await getQuizBySectionId(id).then((result) => {
+        console.log("result", result.length);
+        if (result == []) {
+          return false;
+        } else return true;
+      });
+      return false;
+    },
+  },
+  computed: {
+    fetoneAAA() {
+      getQuizBySectionId(this.id).then((result) => {
+        console.log("result", result.length);
+        if (result == []) {
+          return false;
+        } else return true;
+      });
+    },
   },
 };
 </script>
 
 <style lang="css">
-.sidebarBuilder{
-   overflow-y: auto;
+.sidebarBuilder {
+  overflow-y: auto;
 }
 
 .builder {

@@ -2,7 +2,7 @@
   <div class="manyAnswer">
     <div class="grid-item question-header">
       <p>Вопрос</p>
-      <button class="save-button" @click="saveQwiz">Сохранить вопрос</button>
+      <button class="save-button" @click="saveQuiz">Сохранить вопрос</button>
     </div>
     <div class="grid-item">
       <textarea
@@ -50,7 +50,7 @@
   </div>
 </template>
 <script>
-import { getQwizBySectionId, addQwiz } from "../../services/qwiz.service";
+import { getQuizBySectionId, addQuiz } from "../../services/quiz.service";
 export default {
   name: "ManyAnswer",
   data() {
@@ -70,7 +70,7 @@ export default {
       }
     },
     changeCheck() {},
-    async saveQwiz() {
+    async saveQuiz() {
       let allTextFilled = true;
       let answerSelected = false;
       // проверим все ответы на заполненность
@@ -87,13 +87,10 @@ export default {
           break;
         }
       }
-      if (
-        this.question.length === 0 ||
-        !allTextFilled || !answerSelected
-      ) {
+      if (this.question.length === 0 || !allTextFilled || !answerSelected) {
         alert("НЕ все поля заполнены");
       } else {
-         console.log("Все поля заполнены");
+        console.log("Все поля заполнены");
         let tmp = {
           type: 3,
           question: this.question,
@@ -101,7 +98,7 @@ export default {
           id_Section: this.$route.params.sectionId,
         };
         console.log(tmp);
-        await addQwiz(tmp).then((result) => {
+        await addQuiz(tmp).then((result) => {
           console.log(result);
           alert("Вопрос сохранён");
           this.data.length = 0;

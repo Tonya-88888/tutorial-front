@@ -6,7 +6,7 @@
       @chooseSection="chooseSection"
       @rightButtonClick="ctxMenuProcessing"
       @newSectionClick="vieModal = true"
-      @newQwizClick="createQwiz"
+      @newQuizClick="createQuiz"
     >
     </SidebarBuilder>
     <ContextMenu :display="showContextMenu" ref="menu">
@@ -131,9 +131,9 @@ export default {
       this.vieModal = false;
       this.$refs.header.setContents(""); // текущий контент - пустая строка
     },
-    createQwiz(){
+    createQuiz(){
      
-      this.$router.push({name: "BuilderQwiz", params: { sectionId: this.currSection }});
+      this.$router.push({name: "BuilderQuiz", params: { sectionId: this.currSection }});
 
     },
     ctxMenuProcessing(e, sectionId) {

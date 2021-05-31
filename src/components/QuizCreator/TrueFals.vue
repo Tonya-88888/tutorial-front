@@ -2,7 +2,7 @@
   <div class="trueFalse">
     <div class="grid-item question-header">
       <p>Вопрос</p>
-      <button class="save-button" @click="saveQwiz">Сохранить вопрос</button>
+      <button class="save-button" @click="saveQuiz">Сохранить вопрос</button>
     </div>
     <div class="grid-item">
       <textarea
@@ -22,7 +22,12 @@
       <hr />
       <div class="answer-item" v-for="answer in data" :key="answer.id">
         <div class="answer-radio">
-          <input type="radio" :checked="answer.isTrue" :value="answer" v-model="answerItem" />
+          <input
+            type="radio"
+            :checked="answer.isTrue"
+            :value="answer"
+            v-model="answerItem"
+          />
           <!-- <input type="checkbox" v-model="answer.isTrue" :true-value="true" :false-value="false" @change="changeCheck()"/> -->
         </div>
         <div class="answer-div">
@@ -38,7 +43,7 @@
   </div>
 </template>
 <script>
-import { getQwizBySectionId, addQwiz } from "../../services/qwiz.service";
+import { getQuizBySectionId, addQuiz } from "../../services/quiz.service";
 export default {
   name: "TrueFalse",
   data() {
@@ -53,21 +58,23 @@ export default {
   },
   watch: {
     answerItem(newAnswer, oldAnswer) {
-      for (let i=0; i < this.data.length; i++) {
-        if(this.data[i] === newAnswer){         
-          this.data[i].isTrue = true;    
-          console.log("true this.data[i]", this.data[i])     
-        }
-        else{
-            this.data[i].isTrue = false;
-            console.log("false this.data[i]", this.data[i])
+      for (let i = 0; i < this.data.length; i++) {
+        if (this.data[i] === newAnswer) {
+          this.data[i].isTrue = true;
+          console.log("true this.data[i]", this.data[i]);
+        } else {
+          this.data[i].isTrue = false;
+          console.log("false this.data[i]", this.data[i]);
         }
       }
     },
   },
-   methods: {
-   async saveQwiz() {
-      if (this.question.length === 0 || Object.keys(this.answerItem).length === 0) {
+  methods: {
+    async saveQuiz() {
+      if (
+        this.question.length === 0 ||
+        Object.keys(this.answerItem).length === 0
+      ) {
         alert("НЕ все поля заполнены");
       } else {
         let tmp = {
@@ -77,9 +84,9 @@ export default {
           id_Section: this.$route.params.sectionId,
         };
         console.log(tmp);
-        await addQwiz(tmp).then((result) => {
+        await addQuiz(tmp).then((result) => {
           console.log(result);
-          alert("Вопрос сохранён")
+          alert("Вопрос сохранён");
         });
       }
     },

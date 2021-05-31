@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "../views/Home.vue";
 
-
 const routes = [
   {
     path: "/",
@@ -35,20 +34,18 @@ const routes = [
   },
 
   {
-    path: "/builder:tutorialId",
+    path: "/builder/:tutorialId",
     name: "BuilderTutorial",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/BuilderTutorial.vue"),
   },
-{
-    path: "/builderQwiz/:sectionId",
-    name: "BuilderQwiz",
+  {
+    path: "/builderQuiz/:sectionId",
+    name: "BuilderQuiz",
     component: () =>
-    import(/* webpackChunkName: "about" */ "../views/BuilderQwiz.vue"),
+      import(/* webpackChunkName: "about" */ "../views/BuilderQuiz.vue"),
   },
 ];
-
-
 
 const router = createRouter({
   history: createWebHashHistory(),

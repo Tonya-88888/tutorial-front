@@ -27,8 +27,7 @@ export default {
     async deletelSection(ctx, id) {
       await deletelSection(id).then((result) => {
         alert(result.message);
-      });
- 
+      }); 
     },
   },
   mutations: {
@@ -53,6 +52,7 @@ export default {
       return state.currSectionId;
     },
     getCurrSection: (state) => (id) => {
+      
       return state.sections.find((section) => section._id === id);
     },
     getSectionLen(state) {

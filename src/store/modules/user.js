@@ -1,39 +1,39 @@
-import { createStore } from "vuex";
-import { addUser, getUser } from "../../services/user.service";
-
-const mutations = {
-  fetchUser(state, user) {
-    state.user = user;
+//action получает объект, commit вызывает mutation, mutation изменяет state,  getters возврвщает состояние компоненту
+import {
+  getAllUser,
+  getUser,
+  addUser,
+  deleteUser,
+} from "../../services/user.service";
+export default {
+  actions: {
+    async fetchUsers(ctx) {
+      await getAllUser().then((result) => {
+        ctx.commit("setUser", result);
+      });
+    },
+    async createUser(ctx, data) {
+      await addTutorial(data).then((result) => {
+        // console.log("getters" + result._id); // result - аргумент resolve
+        ctx.commit("addTutorial", result);
+      });
+    },
   },
-  setUserError(state, error) {
-    state.userError = error;
+  mutations: {
+    setUser(state, data) {
+      state.users = data;
+    },
+  },
+  state: {
+    users: [{}],
+  },
+  getters: {
+    getUsers(state) {
+      return state.users;
+    },
+
+    getUserById: (state) => (id) => {
+      return state.users.find((user) => user._id === id);
+    },
   },
 };
-
-const action = {
-  async setUser({ commit }, data = {}) {
-    try {
-      const user = await addUser(data);
-      commit("fetchUser", user);
-    } catch (error) {
-      commit("setUserError", err);
-    }
-  },
-};
-
-const getters = {
-  user: ({ user }) => user,
-  userError: ({ userError }) => userError,
-};
-
-const state = () => ({
-  user: {},
-  userError: null,
-});
-
-export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
-});

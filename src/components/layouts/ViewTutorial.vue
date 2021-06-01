@@ -3,20 +3,20 @@
     <div class="vieSidebar">
       <div class="titleSection">Содержание:</div>
       <div class="itemSection" v-for="item in sections" :key="item._id">
-        <button @click="editSection(item.content)">
+        <button @click="editSection(item.content,item._id )">
           {{ item.name }}
         </button>
       </div>
     </div>
-<div class="contentVieTutorial">
+<div class="contentVieTutorial" ref="content" @scroll="scrollContent">
       <QuillEditor
-  
+      @scroll="scrollContent"
         ref="view"
         :content="contentTuto"
         contentType="html"
         theme="bubble"
-        readOnly="true"
-        enable="false"
+        readOnly=true
+        enable=false
         scrollingContainer: true
       ></QuillEditor>
    </div>
@@ -27,9 +27,10 @@
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
+import e from 'cors';
 
 export default {
-  name: "VieTutorial",
+  name: "ViewTutorial",
   props: ["sections"],
 
   components: {
@@ -41,10 +42,25 @@ export default {
     };
   },
   methods: {
-    editSection(contentTuto) {
+    editSection(contentTuto, id) {
       this.contentTuto = contentTuto;
       this.$refs.view.setContents(contentTuto);
+      this.$emit("editSection",id )
     },
+    scrollContent(){
+      
+      console.log(
+    "↓↑ end:", this.$refs.content.scrollHeight === this.$refs.content.scrollTop + this.$refs.content.clientHeight,
+
+    this.$refs.content.scrollHeight, this.$refs.content.scrollTop, this.$refs.content.clientHeight
+  );
+    
+  // console.log(
+  //   "←→ end:", this.$refs.content.scrollWidth === this.$refs.content.scrollLeft + this.$refs.content.clientWidth,
+
+  //   this.$refs.contentis.scrollWidth, this.$refs.content.scrollLeft, this.$refs.content.clientWidth
+  // );
+    }
   },
 };
 </script>

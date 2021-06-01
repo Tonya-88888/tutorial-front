@@ -45,6 +45,18 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/BuilderQuiz.vue"),
   },
+  {
+    path: "/learning/:tutorialId",
+    name: "Learning",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Learning.vue"),
+  },
+  {
+    path: "/quizPassage/:sectionId",
+    name: "QuizPassage",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/QuizPassage.vue"),
+  },
 ];
 
 const router = createRouter({

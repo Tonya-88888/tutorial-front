@@ -1,6 +1,6 @@
 import { request } from "./generic.service";
 
-const getAllQuiz = (id) => request({ url: `quiz/${id}`, method: "get" });
+const getAllQuiz = () => request({ url: `quiz/`, method: "get" });
 const getQuizBySectionId = (id) =>
   request({ url: `quiz/section/${id}`, method: "get" });
 const getQuizById = (id) => request({ url: `quiz/${id}`, method: "get" });

@@ -10,7 +10,7 @@
         {{ item.name }}
       </button>
 
-      <QuizButton :section="item"></QuizButton>
+      <QuizButton :section="item" @quizButtonClick = "quizButtonClick"></QuizButton>
     </div>
     <div>
       <button class="buttonNew" @click="newSectionClick">
@@ -50,26 +50,12 @@ export default {
     rightButtonClick(e, sectionId) {
       this.$emit("rightButtonClick", e, sectionId);
     },
-    async getQuiz(id) {
-      await getQuizBySectionId(id).then((result) => {
-        console.log("result", result.length);
-        if (result == []) {
-          return false;
-        } else return true;
-      });
-      return false;
-    },
+
+    quizButtonClick(sectionId){
+       this.$router.push({name: "BuilderQuiz", params: { sectionId: sectionId }});
+    }
   },
-  computed: {
-    fetoneAAA() {
-      getQuizBySectionId(this.id).then((result) => {
-        console.log("result", result.length);
-        if (result == []) {
-          return false;
-        } else return true;
-      });
-    },
-  },
+
 };
 </script>
 

@@ -3,7 +3,7 @@
     <nav>
       <ul class="nav-area">
         <li><router-link to="/">Главная</router-link></li>
-        <li><router-link to="/tutorials">Учебники</router-link></li>
+        <li><router-link to="/tutorials">Мои учебники</router-link></li>
       </ul>
     </nav>
     <div class="row">

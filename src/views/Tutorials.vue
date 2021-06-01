@@ -30,7 +30,7 @@
 
 <script>
 import Sidebar from "../components/layouts/SidebarTutorials.vue";
-import VieTutorial from "../components/layouts/VieTutorial.vue";
+import VieTutorial from "../components/layouts/ViewTutorial.vue";
 import PopUp from "../components/layouts/PopUp.vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import ContextMenu from "../components/layouts/ContextMenu.vue";

@@ -1,7 +1,18 @@
 <template>
   <div class="builder-quiz">
     <div class="quiz-sidebar">
-      <SidebarQuiz :list="Quiz" @createQuiz="addClick"> </SidebarQuiz>
+      <SidebarQuiz
+        :list="getQuizBySectionId($route.params.sectionId)"
+        @changeQuiz="changeQuiz"
+        @createQuiz="createQuiz"
+        @rightButtonClick="ctxMenuProcessing"
+      >
+      </SidebarQuiz>
+      <ContextMenu :display="showContextMenu" ref="menu">
+        <ul>
+          <li @click="deleteClick">удалить</li>
+        </ul>
+      </ContextMenu>
     </div>
     <div class="builder-content">
       <div class="grid">
@@ -9,7 +20,11 @@
           <div class="quiz-header">
             <div>
               <p>Выберите тип вопроса</p>
-              <select class="select" v-model="questionType">
+              <select
+                class="select"
+                v-model="questionType"
+                @click="changeTypeQuiz"
+              >
                 <option value="1">Верно/неверно</option>
                 <option value="2">Выбор одного ответа</option>
                 <option value="3">Выбор нескольких ответов</option>
@@ -20,9 +35,9 @@
             </div>
           </div>
         </div>
-        <TrueFalse v-if="questionType == 1"></TrueFalse>
-        <OneAnswer v-if="questionType == 2"></OneAnswer>
-        <ManyAnswer v-if="questionType == 3"></ManyAnswer>
+        <TrueFalse v-if="questionType == 1" :quizData="data"></TrueFalse>
+        <OneAnswer v-if="questionType == 2" :quizData="data"></OneAnswer>
+        <ManyAnswer v-if="questionType == 3" :quizData="data"></ManyAnswer>
         <Sequence v-if="questionType == 5"></Sequence>
         <DefineArea v-if="questionType == 6"></DefineArea>
 
@@ -33,12 +48,14 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import SidebarQuiz from "../components/layouts/SidebarQuiz.vue";
 import TrueFalse from "../components/QuizCreator/TrueFals.vue";
 import OneAnswer from "../components/QuizCreator/OneAnswer.vue";
 import ManyAnswer from "../components/QuizCreator/ManyAnswer.vue";
 import Sequence from "../components/QuizCreator/Sequence.vue";
 import DefineArea from "../components/QuizCreator/DefineArea.vue";
+import ContextMenu from "../components/layouts/ContextMenu.vue";
 
 export default {
   name: "BuilderQuiz",
@@ -49,28 +66,47 @@ export default {
     ManyAnswer,
     Sequence,
     DefineArea,
+    ContextMenu,
   },
+  async mounted() {
+    this.fetchQuiz();
+  },
+  computed: mapGetters(["getQuizBySectionId"]),
   data() {
     return {
       trueAnswer: "",
       questionType: "",
-
-      quiz: [{ name: "Задание 1", _id: 1 }],
+      data: "",
+      editQuiz: "",
+      showContextMenu: false,
     };
   },
   methods: {
-    addClick() {
-      let id = this.quiz.length + 1;
-      this.quiz.push({ name: `Задание ${id}`, _id: id });
+    ...mapActions(["fetchQuiz", "deleteQuiz"]),
+    changeQuiz(quiz) {
+      this.data = quiz;
+      this.questionType = quiz.type;
+
+      console.log(this.data);
     },
-    saveQuiz() {
-      let id = this.quiz.length + 1;
-      this.quiz.push({ name: `Задание ${id}`, _id: id });
+    changeTypeQuiz() {
+      this.data = "";
     },
-  },
-  computed: {
-    OkDisabled() {
-      // return this.popUpInput.length === 0;
+    createQuiz() {
+      this.questionType = "";
+      this.data = "";
+    },
+    ctxMenuProcessing(e, quizId) {
+      this.$refs.menu.open(e);
+      this.editQuiz = quizId;
+    },
+    async deleteClick() {
+      this.$refs.menu.close();
+     this.questionType = "";
+      this.data = "";
+      await this.deleteQuiz(this.editQuiz);
+      await this.fetchQuiz();
+
     },
   },
 };
@@ -87,6 +123,7 @@ export default {
 }
 .quiz-sidebar {
   flex-basis: 20%;
+  overflow: auto;
 }
 .builder-content {
   flex-basis: 80%;

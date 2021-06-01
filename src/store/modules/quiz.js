@@ -9,49 +9,45 @@ import {
 
 export default {
   actions: {
-    async fetchQuiz(ctx, id) {
+    async fetchQuiz(ctx) {
       await getAllQuiz().then((result) => {
-        ctx.commit(" setQuiz", result);
+        ctx.commit("setQuiz", result);
       });
     },
-    async createSection(ctx, data) {
+    async addQuiz(ctx, data) {
       await addSection(data).then((result) => {
         ctx.commit("addSection", result);
       });
     },
-    async updateSection(ctx, data) {
-      await updateSection(data.id, {
-        content: data.content,
-      }).then((result) => {
-        console.log(result);
-      });
+    async updateQuiz(ctx, data) {
+      await updateQuiz(data.id, data.value).then((result) => {});
     },
-    async deletelSection(ctx, id) {
-      await deletelSection(id).then((result) => {
+    async deleteQuiz(ctx, id) {
+      await deleteQuiz(id).then((result) => {
         alert(result.message);
       });
     },
   },
   mutations: {
-    setQuiz(state, sections) {
-      state.sections = sections;
+    setQuiz(state, quiz) {
+      state.quiz = quiz;
     },
-    addSection(state, data) {
-      state.currSectionId = data._id;
-      state.sections.push(data);
+    addQuiz(state, data) {
+      state.currQuizId = data._id;
+      state.quiz.push(data);
     },
   },
   state: {
-    sections: [{ name: "учебник пуст", _id: "1" }],
-    currSectionId: "0",
+    quiz: [],
+    currQuizId: "0",
   },
   getters: {
-    getSection(state) {
-      return state.sections;
+    getQuiz(state) {
+      return state.quiz;
     },
+    getQuizBySectionId: (state) => (id) => {
 
-    getCurrSection: (state) => (id) => {
-      return state.sections.find((section) => section._id === id);
+      return state.quiz.filter((quiz) => quiz.id_Section === id);
     },
   },
 };

@@ -2,7 +2,16 @@
   <div class="trueFalse">
     <div class="grid-item question-header">
       <p>Вопрос</p>
-      <button class="save-button" @click="saveQuiz">Сохранить вопрос</button>
+      <button class="save-button" v-if="!updateButton" @click="saveQuiz">
+        Сохранить задание
+      </button>
+      <button
+        class="save-button"
+        v-if="updateButton"
+        @click="updateQuizBtnClick(quizData._id)"
+      >
+        Обновить задание
+      </button>
     </div>
     <div class="grid-item">
       <textarea
@@ -20,7 +29,7 @@
         <span>верный</span><span>вариант ответа</span>
       </div>
       <hr />
-      <div class="answer-item" v-for="answer in data" :key="answer.id">
+      <div class="answer-item" v-for="answer in answers" :key="answer._id">
         <div class="answer-radio">
           <input
             type="radio"
@@ -28,7 +37,6 @@
             :value="answer"
             v-model="answerItem"
           />
-          <!-- <input type="checkbox" v-model="answer.isTrue" :true-value="true" :false-value="false" @change="changeCheck()"/> -->
         </div>
         <div class="answer-div">
           <input
@@ -43,33 +51,65 @@
   </div>
 </template>
 <script>
-import { getQuizBySectionId, addQuiz } from "../../services/quiz.service";
+import {
+  getQuizBySectionId,
+  addQuiz,
+  updateQuiz,
+} from "../../services/quiz.service";
+import { mapActions } from "vuex";
 export default {
   name: "TrueFalse",
-  data() {
-    return {
-      question: "",
-      answerItem: {},
-      data: [
+  props: ["quizData"],
+  mounted() {
+    if (this.quizData === "") {
+      this.answers = [
         { text: "верно", isTrue: false },
         { text: "не верно", isTrue: false },
-      ],
+      ];
+     
+    } else {
+      this.updateButton = true;
+      this.question =this.quizData.question;
+      this.answers = this.quizData.answers;
+    }
+  },
+  data() {
+    return {
+      answerItem: {},
+      question: "",
+      answers: "",
+      updateButton: false,
     };
   },
   watch: {
-    answerItem(newAnswer, oldAnswer) {
-      for (let i = 0; i < this.data.length; i++) {
-        if (this.data[i] === newAnswer) {
-          this.data[i].isTrue = true;
-          console.log("true this.data[i]", this.data[i]);
+    quizData: {
+      handler: function (val, oldVal) {
+        if (val === "") {
+           this.updateButton = false;
+          this.answers = [
+            { text: "верно", isTrue: false },
+            { text: "не верно", isTrue: false },
+          ];
         } else {
-          this.data[i].isTrue = false;
-          console.log("false this.data[i]", this.data[i]);
+          this.updateButton = true;}
+          this.question = val.question;
+          this.answers = val.answers;
+        
+      },
+     // deep: true,
+    },
+    answerItem(newAnswer, oldAnswer) {
+      for (let i = 0; i < this.answers.length; i++) {
+        if (this.answers[i] === newAnswer) {
+          this.answers[i].isTrue = true;
+        } else {
+          this.answers[i].isTrue = false;
         }
       }
     },
   },
   methods: {
+    ...mapActions(["fetchQuiz", "updateQuiz"]),
     async saveQuiz() {
       if (
         this.question.length === 0 ||
@@ -80,14 +120,38 @@ export default {
         let tmp = {
           type: 1,
           question: this.question,
-          answers: this.data,
+          answers: this.answers,
           id_Section: this.$route.params.sectionId,
         };
-        console.log(tmp);
+
         await addQuiz(tmp).then((result) => {
           console.log(result);
           alert("Вопрос сохранён");
+          this.answers.length = 0;
+          this.question = "";
         });
+        await this.fetchQuiz();
+      }
+    },
+    async updateQuizBtnClick(id) {
+      if (
+        this.question.length === 0 ||
+        Object.keys(this.answerItem).length === 0
+      ) {
+        alert("НЕ все поля заполнены");
+      } else {
+        let tmp = {
+          type: 1,
+          question: this.question,
+          answers: this.answers,
+          id_Section: this.$route.params.sectionId,
+        };
+        await this.updateQuiz({ id: id, value: tmp }).then((result) => {
+          alert("Вопрос обновлен");
+          console.log(result);
+        });
+
+        await this.fetchQuiz();
       }
     },
   },

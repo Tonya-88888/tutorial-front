@@ -2,8 +2,7 @@
   <div>
 <button v-if="currSectionId !== ''"  @click="moveToQuiz"> выполнить задание</button>
     <VieTutorial :sections="getSection" @editSection="editSection"></VieTutorial>
-   
- 
+    
   </div>
 </template>
 <script>
@@ -17,6 +16,7 @@ export default {
   },
   async mounted() {
     await this.fetchSection(this.$route.params.tutorialId);
+    await this.fetchQuiz();
   },
   data() {
     return {
@@ -26,7 +26,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchSection"]),
+    ...mapActions(["fetchSection", " fetchQuiz"]),
     moveToQuiz(){
 this.$router.push({name: "QuizPassage", params: { sectionId: this.currSectionId }});
     },

@@ -2,21 +2,22 @@
   <div class="oneAnswer">
     <div class="grid-item question-header"></div>
     <div class="grid-item">
-      <textarea
+      <span class="question-div">{{ question }}</span>
+      <!-- <textarea
         class="question-input"
         rows="4"
         maxlength="350"
         v-model="question"
-      ></textarea>
+      ></textarea> -->
     </div>
     <div class="grid-item answer-header"><p>Варианты ответов</p></div>
     <div class="grid-item answer">
       <hr />
       <div class="answer-item" v-for="answer in answers" :key="answer._id">
-        <div v-if="currQuiz.type == 1 || quiz.type == 2" class="answer-radio">
+        <div v-if="type == 2 || type == 1" class="answer-radio">
           <input type="radio" :value="answer" v-model="answerItem" />
         </div>
-        <div v-if="currQuiz.type == 3" class="answer-radio">
+        <div v-if="type == 3" class="answer-radio">
           <input
             type="checkbox"
             v-model="answerItem"
@@ -25,7 +26,8 @@
           />
         </div>
         <div class="answer-div">
-          <input class="answer-input" readonly="true" v-model="answer.text" />
+          <span class="answer-input">{{ answer.text }}</span>
+          <!-- <input class="answer-input" readonly="true" v-model="answer.text" /> -->
         </div>
       </div>
     </div>
@@ -36,18 +38,46 @@ export default {
   name: "ViewQuiz",
   props: ["currQuiz"],
   mounted() {
-    console.log(this.currQuiz.question)
+    console.log(this.currQuiz);
+    if (typeof this.currQuiz !== "undefined") {
+      this.question = this.currQuiz.question;
+      this.answers = this.currQuiz.answers;
+      this.type = this.currQuiz.type;
+      
+    }
   },
   data() {
     return {
       answerItem: [],
-      question: this.currQuiz.question,
-      answers:this.currQuiz.answers,
-      answerItem: {},
+      question: "",
+      answers: "",
+      type: 3,
     };
   },
+  watch: {
+    currQuiz: {
+      handler: function (val, oldVal) {
+        if (val !== "") {
+          this.updateButton = true;
+        }
+
+        this.question = val.question;
+        this.answers = val.answers;
+        this.type = val.type;
+      },
+      // answerItem(newAnswer, oldAnswer) {
+      //   for (let i = 0; i < this.answers.length; i++) {
+      //     if (this.answers[i] === newAnswer) {
+      //       this.answers[i].isTrue = true;
+      //     } else {
+      //       this.answers[i].isTrue = false;
+      //     }
+      //   }
+      // },
+    },
+  },
 };
-</script>
+</script >
 <style>
 .builder-quiz {
   display: flex;
@@ -71,9 +101,10 @@ export default {
   margin: 10px 15px;
   background-color: rgb(255, 255, 255);
 }
-.grid-item {
+.grid-item2 {
   width: 100%;
   padding: 0 20px;
+
 }
 .quiz-header {
   display: flex;
@@ -106,6 +137,11 @@ export default {
   width: 90%;
   padding: 3px;
   resize: none;
+}
+.question-div{
+  border: 1px solid black;
+  padding: 10px;
+  margin-top: 20px;
 }
 .answer-header-item {
   display: flex;

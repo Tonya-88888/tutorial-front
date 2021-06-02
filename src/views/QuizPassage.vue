@@ -1,12 +1,12 @@
 <template>
   <div>
-    <!-- <ViewQuiz :currQuiz="currQuiz"></ViewQuiz> -->
+    <ViewQuiz :currQuiz="allQuiz[currQuizIndex]" v-if="showQuiz"></ViewQuiz>
     <div
       
     >
-      {{ currQuiz.type}}
+      <!-- {{allQuiz[currQuizIndex]}} -->
     </div>
-    <button @click="nextAnswer">acasc</button>
+    <button @click="nextAnswer">Ответить</button>
   </div>
 </template>
 <script>
@@ -19,36 +19,34 @@ export default {
     ViewQuiz,
   },
   async mounted() {
+   
     await this.fetchQuiz();
+    this.allQuiz = this.getQuizBySectionId(this.$route.params.sectionId);
 
-   // console.log(this.getQuizBySectionId(this.$route.params.sectionId));
-    // this.allQuiz = this.getQuizBySectionId(this.$route.params.sectionId);
-    // console.log(this.allQuiz[0].question)
   },
   data() {
     return {
       currQuizIndex: 0,
-     // allQuiz: "",
+      allQuiz: [],
+      currQuiz: {},
+      showQuiz: true,
     };
   },
-  computed: {
+ computed: {
     ...mapGetters(["getQuizBySectionId"]),
-    currQuiz() {
- 
-if( typeof this.getQuizBySectionId(this.$route.params.sectionId)[this.currQuizIndex] !== "undefined"){
-    console.log(this.getQuizBySectionId(this.$route.params.sectionId)[this.currQuizIndex]);
-     return this.getQuizBySectionId(this.$route.params.sectionId)[this.currQuizIndex];
-}
-     
-    },
-  },
-
+ },
   methods: {
     ...mapActions(["fetchQuiz"]),
     nextAnswer() {
-       this.currQuizIndex += 1;
-     
+       this.currQuizIndex += 1;   
     },
   },
+  watch: {
+    currQuizIndex(newIndex, oldIndex) {
+      if(newIndex ===  this.allQuiz.length)
+      this.showQuiz = false;
+     
+    }
+  }
 };
 </script>

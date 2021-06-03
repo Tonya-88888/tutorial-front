@@ -2,7 +2,6 @@
   <div class="tutorialCard" @click="moveToTutorial(data.id)">
     <div class="tutorialName">{{ data.name }}</div>
     <div class="authorName">Автор:{{ data.authorName }}</div>
-
   </div>
 </template>
 <script>
@@ -11,11 +10,13 @@ export default {
   props: ["data"],
   async mounted() {},
   methods: {
-    moveToTutorial(tutorialId){
+    moveToTutorial(tutorialId) {
       //this.$emit("moveToTutorial", tutorialId)
-       this.$router.push({name: "Learning", params: { tutorialId: tutorialId }});
-      
-    }
+      this.$router.push({
+        name: "Learning",
+        params: { tutorialId: tutorialId },
+      });
+    },
   },
   data() {
     return {};
@@ -29,13 +30,14 @@ export default {
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-between;
-cursor: pointer;
-  padding: 15px;
-  background-color: #b3fab3;
+  cursor: pointer;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
   margin: 5px 3px;
   box-shadow: 0 0 5px;
   width: 250px;
-  height: 100px;
+  height: 120px;
 }
 .tutorialName {
   font-size: 16px;

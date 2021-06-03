@@ -10,8 +10,9 @@
     >
     </SidebarBuilder>
     <ContextMenu :display="showContextMenu" ref="menu">
-      <ul>
+      <ul class="context-ul">
         <li @click="deleteClick">удалить</li>
+        <li @click="addQuiz">добавить задание</li>
       </ul>
     </ContextMenu>
     <div class="">
@@ -34,7 +35,7 @@
     >
       <p>Введите название нового параграфа</p>
     </PopUp>
-    <button @click="getText">сохранить</button>
+    <!-- <button @click="getText">сохранить</button> -->
   </div>
 </template>
 
@@ -182,4 +183,9 @@ export default {
   overflow-y: auto;
   height: 72vh;
 }
+.context-ul {
+  list-style-type: none;
+    margin-left: 0; /* Отступ слева в браузере IE и Opera */
+    padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+   }
 </style>

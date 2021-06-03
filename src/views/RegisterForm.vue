@@ -254,10 +254,10 @@ const tmp = addUser({
 }
 
 .form button {
-  background-color: #98fb98;
-  border: 2px solid #92ff92;
+  background-color: #2d2752;
+  border: 2px solid #242041;
   border-radius: 4px;
-  color: black;
+  color: rgb(255, 255, 255);
   display: block;
   font-family: inherit;
   font-size: 16px;

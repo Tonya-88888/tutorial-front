@@ -9,13 +9,13 @@
     <div class="item1" v-for="tutorial in tutorials" :key="tutorial._id">
       <div class="link-container1">
         <button
-          class="buttonSide"
-          @click="changeTutorial(tutorial._id)"
-          @click.right="rightButtonClick($event, tutorial._id)"
+       ref="button"
+         class="buttonSide"
+          @click="changeTutorial(tutorial._id, $event)"
+          @click.right="rightButtonClick($event, tutorial._id)"        
         >
           {{ tutorial.name }}
         </button>
-   
       </div>
     </div>
   </div>
@@ -24,9 +24,20 @@
 <script>
 export default {
   props: ["tutorials"],
+  data() {
+    return {
+      isActive: false,
+    };
+  },
   methods: {
-    changeTutorial(id) {
+    changeTutorial(id,e) {
       this.$emit("changeTutorial", id);
+      this.isActive = true;
+
+this.$refs.button.removeClass("active");
+
+      e.target.classList.add('active');
+    //  this.$refs.button.style.backgroundColor = '#98fb98';
     },
     createTutorial() {
       this.$emit("createTutorial");
@@ -39,7 +50,16 @@ export default {
 </script>
 
 <style lang="css">
+.active{
+  background-color: whitesmoke;
+  margin-top: 3px;
+  border: none;
+  padding: 10px 0px;
+  transition: 0.2s ease;
+}
 .sidebar {
+  height: calc(80% - 1px);
+  width: 250px;
   overflow: auto;
 }
 .builderButton {
@@ -69,8 +89,8 @@ export default {
   padding: 10px 0px;
   transition: 0.2s ease;
 }
-.buttonSide:hover{
-background-color:whitesmoke;
+.buttonSide:hover {
+  background-color: whitesmoke;
 }
 .green1 {
   background-color: #ffff;

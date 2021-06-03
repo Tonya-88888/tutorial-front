@@ -13,10 +13,10 @@
       <QuizButton :section="item" @quizButtonClick = "quizButtonClick"></QuizButton>
     </div>
     <div>
-      <button class="buttonNew" @click="newSectionClick">
-        добавить параграф
+      <button class="fa fa-plus fa-2x buttonNew" @click="newSectionClick">
+       
       </button>
-      <button class="buttonNew" @click="newQuizClick">добавить задание</button>
+      <!-- <button class="buttonNew" @click="newQuizClick">добавить задание</button> -->
     </div>
   </div>
 </template>
@@ -92,12 +92,13 @@ export default {
 }
 
 .buttonNew {
-  background-color: #eeeeee;
+background-color: white;
   margin-top: 3px;
   border: none;
   padding: 10px 5px;
   border-radius: 10px;
   margin: 20px;
+  margin-left: 80px;
 }
 .green {
   background-color: rgb(236, 235, 235);

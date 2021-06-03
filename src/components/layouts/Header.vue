@@ -52,13 +52,14 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px 50px;
-  background: #f3f3f3;
+  background: #2d2752;
 }
 .logo {
   cursor: pointer;
 }
 .nav-area {
   list-style: none;
+  margin: 0.3rem;
 }
 .nav-area li {
   display: inline-block;
@@ -67,10 +68,13 @@ header {
 }
 .nav-area li a {
   transition: all 0.3s ease 0s;
-  color: #000;
+  color: rgb(255, 255, 255);
 }
 .nav-area li a:hover {
-  color: #004152;
+  text-decoration: underline;
+}
+header .row .col a {
+  color: #b3b3b3;
 }
 .btn-area {
   cursor: pointer;

@@ -5,7 +5,7 @@
     <div class="item1" v-for="item in list" :key="item._id">
       <div class="link-container1">
         <button
-          class="buttonSide"
+          class="buttonCh"
           @click="changeQuiz(item)"
           @click.right="rightButtonClick($event, item._id)"
         >
@@ -13,7 +13,7 @@
         </button>
       </div>
     </div>
-    <button class="builderButton" @click="createQuiz">Добавить</button>
+    <button class="fa fa-plus fa-2x builderQuizButton" @click="createQuiz"></button>
   </div>
 </template>
 
@@ -43,12 +43,14 @@ export default {
    
 
 }
-.builderButton {
-  border-radius: 10px;
-  background-color: #ffff;
+.builderQuizButton {
+  border: none;
+  outline: none;
+ 
   padding: 5px;
   margin-top: 10px;
-  margin-left: 40px;
+  margin-left: 100px;
+  color: #2d2752;
 }
 .title1 {
   color: black;
@@ -64,28 +66,22 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.buttonSide {
-  background-color: #98fb98;
-  width: 250px;
-  margin-top: 3px;
-  border: none;
-  padding: 10px 0px;
-  transition: 0.2s ease;
-   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.buttonCh {
+
+    background-color: #aaaaaa;
+    width: 215px;
+    margin-top: 3px;
+    border: none;
+    padding: 10px 0px;
+    transition: 0.2s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
 }
-.buttonSide:hover {
-  background-color: whitesmoke;
-}
+
 .green1 {
   background-color: #ffff;
 }
-.builderButton {
-  border-radius: 10px;
-  background-color: #ffff;
-  padding: 5px;
-  margin-top: 10px;
-  margin-left: 40px;
-}
+
 </style>

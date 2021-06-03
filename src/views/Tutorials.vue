@@ -113,7 +113,7 @@ export default {
 }
 .contentTutorial {
   background: rgb(248, 248, 248);
-  outline: 2px solid rgb(197, 197, 197);
+ 
   width: 100%;
   height: 100%;
   margin: 0px;

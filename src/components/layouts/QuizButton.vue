@@ -31,8 +31,9 @@ export default {
 .buttonQuiz{
   background-color: #cfd4cf;
   margin-top: 3px;
+  margin-left: 24px;
   border: none;
-  padding: 5px 0px;
-  height: 30px;
+ color: #4e4e4e;
+  height: 24px;
 }
 </style>

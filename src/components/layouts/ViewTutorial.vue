@@ -55,11 +55,6 @@ export default {
     this.$refs.content.scrollHeight, this.$refs.content.scrollTop, this.$refs.content.clientHeight
   );
     
-  // console.log(
-  //   "←→ end:", this.$refs.content.scrollWidth === this.$refs.content.scrollLeft + this.$refs.content.clientWidth,
-
-  //   this.$refs.contentis.scrollWidth, this.$refs.content.scrollLeft, this.$refs.content.clientWidth
-  // );
     }
   },
 };
@@ -67,19 +62,27 @@ export default {
 
 <style lang="css">
 .vieTutorial {
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-  position: fixed;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    position: fixed;
+   background-color: #c9c9c9;
+    border-radius: 20px;
+    width: 100%;
 }
 .contentVieTutorial {
+  border-color: black;
+    margin: 10px 10px 10px 10px;
+    /* border: 1px solid black; */
+    background-color: white;
+    border-radius: 10px;
   padding-left: 10px;
   overflow-y: auto;
   height: 78vh;
-  width: 92%;
+      width: 97%;
 }
 .vieSidebar {
   border-radius: 10px;
-  background-color: #ffff;
+  background-color: #c9c9c9;
   padding: 5px;
   margin-top: 10px;
   margin-left: 40px;

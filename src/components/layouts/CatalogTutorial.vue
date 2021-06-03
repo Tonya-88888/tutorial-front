@@ -97,6 +97,8 @@ export default {
   border: 1px solid black;
   border-radius: 10px;
   padding: 2px;
+  background-color: white;
+    overflow: hidden;
 }
 .selectFilterType {
   padding: 5px;

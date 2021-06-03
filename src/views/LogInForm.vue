@@ -19,7 +19,7 @@
         <i class="fas fa-exclamation-circle"></i>
         <small>Error message</small>
       </div>
-      <span>Еще не зарегистированны? <router-link to="/registerForm">Pегистрация</router-link> </span>
+      <span>Еще не зарегистированны?  </span> <span class="link-to-register"><router-link to="/registerForm">Pегистрация</router-link></span>
       <button>Войти</button>
     </form>
   </div>
@@ -148,7 +148,9 @@ export default {
   padding: 5px 5px;
   width: 100%;
 }
-
+.link-to-register{
+  color: black;
+}
 .form-control input:focus {
   outline: 0;
   border-color: #777;
@@ -193,10 +195,10 @@ export default {
 }
 
 .form button {
-  background-color:#98FB98;
-  border: 2px solid #92ff92;
+  background-color:#2d2752;
+  border: 2px solid #242041;
   border-radius: 4px;
-  color: black;
+  color: rgb(255, 255, 255);
   display: block;
   font-family: inherit;
   font-size: 16px;

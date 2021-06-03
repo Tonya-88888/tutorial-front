@@ -1,12 +1,12 @@
 <template>
   <div>
-    <ViewQuiz :currQuiz="allQuiz[currQuizIndex]" v-if="showQuiz"></ViewQuiz>
+    <ViewQuiz @nextAnswer="nextAnswer" :currQuiz="allQuiz[currQuizIndex]" v-if="showQuiz"></ViewQuiz>
     <div
       
     >
       <!-- {{allQuiz[currQuizIndex]}} -->
     </div>
-    <button @click="nextAnswer">Ответить</button>
+    <!-- <button class="next-button" @click="nextAnswer">Ответить</button> -->
   </div>
 </template>
 <script>
@@ -50,3 +50,6 @@ export default {
   }
 };
 </script>
+<style>
+
+</style>

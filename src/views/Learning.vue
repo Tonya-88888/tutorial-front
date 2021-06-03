@@ -1,8 +1,8 @@
 <template>
-  <div>
-<button v-if="currSectionId !== ''"  @click="moveToQuiz"> выполнить задание</button>
-    <VieTutorial :sections="getSection" @editSection="editSection"></VieTutorial>
-    
+  <div Class="learning">
+<div> <VieTutorial :sections="getSection" @editSection="editSection"></VieTutorial></div>
+   
+    <button class="move-to-quiq-button" v-if="currSectionId !== ''"  @click="moveToQuiz"> выполнить задание</button>
   </div>
 </template>
 <script>
@@ -38,3 +38,21 @@ this.currSectionId = sectionId;
   computed: mapGetters(["getSection"]),
 };
 </script>
+
+<style>
+.learning{
+   display: flex;
+  flex-direction: column;
+}
+.move-to-quiq-button{
+border: 1px solid black;
+    border-radius: 10px;
+    background-color: #ffff;
+    padding: 8px;
+    margin-top: 511px;
+    margin-left: 233px;
+    margin-right: 15px;
+    float: right;
+    font-weight: 500;
+}
+</style>

@@ -54,7 +54,7 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 99;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.5);
 
   display: flex;
   align-items: center;
@@ -63,6 +63,7 @@ export default {
 .popup-inner {
   background: rgb(255, 255, 255);
   padding: 32px;
+  border-radius: 10px;
 }
 .popup-btn {
   margin-left: 10px;

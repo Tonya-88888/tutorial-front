@@ -56,8 +56,10 @@ export default {
 </script>
 <style lang="css">
 .context-menu {
+  padding: 10px;
+  font-size: 12px;
   position: fixed;
-  background: white;
+  background: rgb(243, 243, 243);
   z-index: 999;
   outline: none;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);

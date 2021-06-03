@@ -1,17 +1,13 @@
 <template>
-  <div class="oneAnswer">
-    <div class="grid-item question-header"></div>
-    <div class="grid-item">
-      <span class="question-div">{{ question }}</span>
-      <!-- <textarea
-        class="question-input"
-        rows="4"
-        maxlength="350"
-        v-model="question"
-      ></textarea> -->
+  <div class="viewQuiz">
+    <div class="item-grid question-header"></div>
+    <div class="item-grid question-div">
+      <span class="question-span">{{ question }}</span>
     </div>
-    <div class="grid-item answer-header"><p>Варианты ответов</p></div>
-    <div class="grid-item answer">
+    <div class="item-grid answer-header">
+      <span class="header-span">Варианты ответов</span>
+    </div>
+    <div class="item-grid answer">
       <hr />
       <div class="answer-item" v-for="answer in answers" :key="answer._id">
         <div v-if="type == 2 || type == 1" class="answer-radio">
@@ -26,10 +22,13 @@
           />
         </div>
         <div class="answer-div">
-          <span class="answer-input">{{ answer.text }}</span>
+          <span class="answer-span">{{ answer.text }}</span>
           <!-- <input class="answer-input" readonly="true" v-model="answer.text" /> -->
         </div>
       </div>
+    </div>
+    <div class="item-grid">
+      <button class="next-button" @click="nextAnswer">Ответить</button>
     </div>
   </div>
 </template>
@@ -43,7 +42,6 @@ export default {
       this.question = this.currQuiz.question;
       this.answers = this.currQuiz.answers;
       this.type = this.currQuiz.type;
-      
     }
   },
   data() {
@@ -65,94 +63,65 @@ export default {
         this.answers = val.answers;
         this.type = val.type;
       },
-      // answerItem(newAnswer, oldAnswer) {
-      //   for (let i = 0; i < this.answers.length; i++) {
-      //     if (this.answers[i] === newAnswer) {
-      //       this.answers[i].isTrue = true;
-      //     } else {
-      //       this.answers[i].isTrue = false;
-      //     }
-      //   }
-      // },
     },
   },
+  methods: {
+    nextAnswer(){
+      this.$emit("nextAnswer");
+    }
+  }
 };
-</script >
+</script>
 <style>
-.builder-quiz {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  height: 100%;
-  width: 100%;
-  margin-right: 10px;
-}
-.quiz-sidebar {
-  flex-basis: 20%;
-  overflow: auto;
-}
-.builder-content {
-  flex-basis: 80%;
+.viewQuiz {
+  margin: 80px;
+  border: none;
+  border-radius: 20px;
   background-color: rgb(241, 240, 240);
+  padding: 20px;
+  box-shadow: 0 0 8px;
+  padding-bottom: 60px;
 }
-.grid {
-  display: grid;
-  grid-auto-flow: row;
-  margin: 10px 15px;
-  background-color: rgb(255, 255, 255);
-}
-.grid-item2 {
-  width: 100%;
-  padding: 0 20px;
 
+.question-span {
+  font-weight: 400;
+  font-style: normal;
 }
+.header-span {
+  font-weight: 200;
+  font-style: italic;
+  color: rgb(99, 99, 99);
+}
+
+.item-grid {
+  padding: 0 20px;
+  margin-top: 20px;
+}
+
 .quiz-header {
   display: flex;
   flex-direction: row;
 }
-.select {
-  padding: 5px;
-  border: 1px solid #000;
+
+.next-button {
   border-radius: 10px;
-  outline: none;
-}
-.save-button {
+  background-color: #ffff;
   padding: 5px;
-  margin-top: 5px;
-  margin-left: 50px;
-  margin-bottom: 10px;
-  margin-right: 100px;
-  background-color: #fff;
-  border: 1px solid #000;
-  border-radius: 10px;
+  margin-top: 10px;
+  margin-left: 40px;
 }
-.add-button {
-  padding: 5px;
-  margin-top: 15px;
-  background-color: #fff;
-  border: 1px solid #000;
-  border-radius: 10px;
-}
-.question-input {
-  width: 90%;
-  padding: 3px;
-  resize: none;
-}
-.question-div{
-  border: 1px solid black;
+
+.question-div {
+  height: 100px;
+  border: 1px solid rgb(185 185 185);
   padding: 10px;
   margin-top: 20px;
+  margin-left: 8px;
+  margin-right: 8px;
+  border-radius: 10px;
+  background-color: rgb(224, 223, 223);
 }
-.answer-header-item {
-  display: flex;
-  flex-direction: row;
-  font-size: 12px;
-  color: rgb(197, 197, 197);
-  font-weight: 250;
-}
-.answer-header-item span {
-  margin-right: 5px;
-}
+
 .answer-item {
   display: flex;
   flex-direction: row;
@@ -168,23 +137,31 @@ export default {
 .answer-div {
   flex-basis: 100%;
 }
-.answer-input {
+.answer-span {
+  font-weight: 400;
+  font-style: normal;
+
   width: 90%;
   padding: 3px;
   border: none;
   outline: none;
 }
-.delete-answer {
-  border-radius: 50%;
-  background-color: #fff;
-  width: 30px;
-  border: 1px solid black;
-}
+
 button:hover {
   background-color: rgb(197, 197, 197);
 }
 .question-header {
   display: flex;
   justify-content: space-between;
+}
+.next-button {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #ffff;
+  padding: 8px;
+  margin-top: 10px;
+  margin-left: 40px;
+  float: right;
+  font-weight: 700;
 }
 </style>
